@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.users.models import User
+from apps.users.models import User, Customer
 
 
 class UserSerializer(serializers.Serializer):
@@ -32,5 +32,20 @@ class UserSerializer(serializers.Serializer):
         instance.last_name = validated_data.get('last_name', instance.last_name)
         if 'password' in validated_data:
             instance.set_password(validated_data['password'])
+        instance.save()
+        return instance
+
+
+class CustomerSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(max_length=255)
+    address = serializers.CharField(max_length=255)
+
+    def create(self, validated_data):
+        return Customer.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.address = validated_data.get('address', instance.address)
         instance.save()
         return instance

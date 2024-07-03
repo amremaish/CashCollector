@@ -1,10 +1,5 @@
 from django.db import models
-from apps.users.models import User
-
-
-class Customer(models.Model):
-    name = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
+from apps.users.models import User, Customer
 
 
 class Task(models.Model):

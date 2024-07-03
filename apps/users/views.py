@@ -1,11 +1,14 @@
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
+from .models import Customer
 from .permission import IsManager
-from .serializers import UserSerializer
+from .serializers import UserSerializer, CustomerSerializer
 from .utils import check_freeze_status
+from ..core.utils import Pagination
 
 
 class UserDetail(APIView):
@@ -24,6 +27,7 @@ class UserStatus(APIView):
         user = request.user
         check_freeze_status(user)
         return Response({"is_frozen": user.is_frozen})
+
 
 class AddCashCollector(APIView):
     permission_classes = [IsAuthenticated, IsManager]
@@ -64,3 +68,29 @@ class SignUpManager(APIView):
                 {"detail": "Successfully signed up as manager."}, status=status.HTTP_201_CREATED
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CustomerAddition(APIView):
+    permission_classes = [IsAuthenticated, IsManager]
+
+    def put(self, request):
+        data = request.data
+        serializer = CustomerSerializer(data=data)
+        if serializer.is_valid():
+            customer = serializer.save()
+            return Response(
+                {"detail": "Customer created successfully.", "customer": serializer.data},
+                status=status.HTTP_201_CREATED
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CustomerListing(APIView):
+    permission_classes = [IsAuthenticated, IsManager]
+
+    def get(self, request):
+        paginator = Pagination()
+        customers = Customer.objects.all()
+        result_page = paginator.paginate_queryset(customers, request)
+        serializer = CustomerSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
