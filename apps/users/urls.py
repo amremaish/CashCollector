@@ -10,6 +10,7 @@ urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('me/', UserDetail.as_view(), name='user-detail'),
+    path('status/', UserStatus.as_view(), name='user-status'),
     path('add/cash-collector', AddCashCollector.as_view(), name='cash-collector'),
     path('manager/signup', SignUpManager.as_view(), name='manager'),
 ]

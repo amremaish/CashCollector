@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .permission import IsManager
 from .serializers import UserSerializer
+from .utils import check_freeze_status
 
 
 class UserDetail(APIView):
@@ -15,6 +16,14 @@ class UserDetail(APIView):
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
+
+class UserStatus(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        check_freeze_status(user)
+        return Response({"is_frozen": user.is_frozen})
 
 class AddCashCollector(APIView):
     permission_classes = [IsAuthenticated, IsManager]
