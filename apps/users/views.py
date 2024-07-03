@@ -1,14 +1,12 @@
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .models import Customer
-from .permission import IsManager
+from apps.core.permission import IsManager
 from .serializers import UserSerializer, CustomerSerializer
-from .utils import check_freeze_status
-from ..core.utils import Pagination
+from ..core.utils import Pagination, check_update_freeze_status
 
 
 class UserDetail(APIView):
@@ -25,7 +23,7 @@ class UserStatus(APIView):
 
     def get(self, request):
         user = request.user
-        check_freeze_status(user)
+        check_update_freeze_status(user)
         return Response({"is_frozen": user.is_frozen})
 
 
@@ -77,7 +75,7 @@ class CustomerAddition(APIView):
         data = request.data
         serializer = CustomerSerializer(data=data)
         if serializer.is_valid():
-            customer = serializer.save()
+            serializer.save()
             return Response(
                 {"detail": "Customer created successfully.", "customer": serializer.data},
                 status=status.HTTP_201_CREATED
