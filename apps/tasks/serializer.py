@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from apps.tasks.models import Task
+from apps.users.models import Customer
 
 
 class CustomerSerializer(serializers.Serializer):
@@ -9,9 +10,13 @@ class CustomerSerializer(serializers.Serializer):
     address = serializers.CharField(max_length=255)
 
 
+class TaskCreationSerializer(serializers.Serializer):
+    customer = serializers.PrimaryKeyRelatedField(queryset=Customer.objects.all())
+
+
 class TaskSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    customer = CustomerSerializer(read_only=True)
+    customer = serializers.PrimaryKeyRelatedField(queryset=Customer.objects.all())
     assigned_to = serializers.PrimaryKeyRelatedField(read_only=True)
     collected_at = serializers.DateTimeField(read_only=True, allow_null=True, required=False)
     delivered_to_manager_at = serializers.DateTimeField(read_only=True, allow_null=True, required=False)
@@ -24,7 +29,6 @@ class TaskSerializer(serializers.Serializer):
 
 class TaskCashCollectorSerializer(serializers.Serializer):
     amount_due = serializers.DecimalField(max_digits=10, decimal_places=2)
-
 
 
 class TaskFilterSerializer(serializers.Serializer):

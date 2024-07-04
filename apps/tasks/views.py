@@ -9,11 +9,10 @@ from rest_framework.views import APIView
 
 from apps.core.permission import IsCashCollector, IsManager
 from apps.core.utils import Pagination, check_update_freeze_status
-from apps.tasks.models import Task
-from apps.tasks.serializer import TaskSerializer, TaskCashCollectorSerializer, TaskFilterSerializer
+from apps.tasks.serializer import *
 
 
-class TaskListCreateView(APIView):
+class TaskLisTView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -31,8 +30,12 @@ class TaskListCreateView(APIView):
         serializer = TaskSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
+
+class TaskCreateView(APIView):
+    permission_classes = [IsAuthenticated, IsManager]
+
     def put(self, request):
-        serializer = TaskSerializer(data=request.data)
+        serializer = TaskCreationSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -84,13 +87,8 @@ class TaskCollectView(APIView):
         # Update collected_at
         task.collected_at = timezone.now()
         task.amount_due = cash_serializer.validated_data['amount_due']
-
-        serializer = TaskSerializer(task, data=request.data)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
         task.save()
-
+        serializer = TaskSerializer(task)
         return Response(serializer.data)
 
 
