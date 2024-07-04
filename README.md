@@ -58,7 +58,7 @@ features to ensure that Cash Collectors do not abuse the system.
    ```
 
 ## Postman Collection
-> You can download the it from [here](/res/Cash%20Collector.postman_collection.json).
+> You can view it from [here](/res/Cash%20Collector.postman_collection.json).
 ## Database Models
 
 ![alt text](/res/diagram.png)
