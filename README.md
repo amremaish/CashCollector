@@ -41,7 +41,7 @@ features to ensure that Cash Collectors do not abuse the system.
 
 3. Install dependencies:
    ```bash
-    pip install -r requirements.txt
+   pip install -r requirements.txt
    ```
 
 
@@ -87,6 +87,17 @@ curl -X POST http://localhost:8000/api/users/login \
 
 ```sh
 curl -X GET http://localhost:8000/api/users/me \
+-H "Authorization: Bearer <TOKEN>"
+```
+
+## Cash Collector status
+
+**Description**: Retrieve Cash Collector status whether frozen or not 
+**Method**: GET  
+**Endpoint**: `/api/users/status`
+
+```sh
+curl -X GET 'http://localhost:8000/api/users/status' \
 -H "Authorization: Bearer <TOKEN>"
 ```
 
