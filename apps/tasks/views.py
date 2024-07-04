@@ -20,9 +20,9 @@ class TaskLisTView(APIView):
         paginator = Pagination()
 
         if user.is_manager:
-            tasks = Task.objects.all()
+            tasks = Task.objects.all().order_by('-id')
         elif user.is_cash_collector:
-            tasks = Task.objects.filter(assigned_to=user, completed=True)
+            tasks = Task.objects.filter(assigned_to=user, completed=True).order_by('-id')
         else:
             tasks = Task.objects.none()
 
@@ -72,7 +72,7 @@ class TaskCollectView(APIView):
             return Response({"detail": "You cannot collect this task."}, status=status.HTTP_403_FORBIDDEN)
 
         if check_update_freeze_status(request.user):
-            return Response({"detail": "You account is frozen, please deliver the cash"},
+            return Response({"detail": "Your account is frozen, please deliver the cash"},
                             status=status.HTTP_403_FORBIDDEN)
 
         if task.collected_at:

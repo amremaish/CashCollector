@@ -18,9 +18,10 @@ def check_update_freeze_status(cash_collector: User):
     if cash_collector.is_cash_collector:
         collected_amounts = Task.objects.filter(
             assigned_to=cash_collector,
-            collected_at__gte=timezone.now() - timedelta(days=2)
+            collected_at__lte=timezone.now() - timedelta(days=2),
+            delivered_to_manager_at=None
         )
-        total_amount = sum([task.amount_due for task in collected_amounts])
+        total_amount = sum([task.amount_due for task in collected_amounts if task.amount_due])
         if total_amount >= 5000:
             cash_collector.is_frozen = True
             cash_collector.save()
