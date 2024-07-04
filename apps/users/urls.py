@@ -13,6 +13,6 @@ urlpatterns = [
     path('status/', UserStatus.as_view(), name='user-status'),
     path('add/cash-collector', AddCashCollector.as_view(), name='cash-collector'),
     path('manager/signup', SignUpManager.as_view(), name='SignUpManager'),
-    path('add/customer', CustomerAddition.as_view(), name='CustomerAddition'),
-    path('customers', CustomerListing.as_view(), name='CustomerListing'),
+    path('add/customer', CustomerView.as_view(), name='CustomerAddition'),
+    path('customers', CustomerView.as_view(), name='CustomerListing'),
 ]

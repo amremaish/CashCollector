@@ -68,7 +68,7 @@ class SignUpManager(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CustomerAddition(APIView):
+class CustomerView(APIView):
     permission_classes = [IsAuthenticated, IsManager]
 
     def put(self, request):
@@ -82,13 +82,9 @@ class CustomerAddition(APIView):
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-class CustomerListing(APIView):
-    permission_classes = [IsAuthenticated, IsManager]
-
     def get(self, request):
         paginator = Pagination()
-        customers = Customer.objects.all()
+        customers = Customer.objects.all().order_by('id')
         result_page = paginator.paginate_queryset(customers, request)
         serializer = CustomerSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
