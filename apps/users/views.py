@@ -74,7 +74,10 @@ class CustomerView(APIView):
         serializer = CustomerSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {"detail": "Customer created successfully.", "customer": serializer.data},
+            status=status.HTTP_201_CREATED
+        )
 
     def get(self, request):
         paginator = Pagination()
