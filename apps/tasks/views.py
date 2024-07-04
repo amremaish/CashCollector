@@ -1,5 +1,5 @@
-from datetime import datetime
-
+import csv
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import status
@@ -7,10 +7,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.core.permission import IsCashCollector
+from apps.core.permission import IsCashCollector, IsManager
 from apps.core.utils import Pagination, check_update_freeze_status
 from apps.tasks.models import Task
-from apps.tasks.serializer import TaskSerializer, TaskCashCollectorSerializer
+from apps.tasks.serializer import TaskSerializer, TaskCashCollectorSerializer, TaskFilterSerializer
 
 
 class TaskListCreateView(APIView):
@@ -108,3 +108,59 @@ class TaskDeliverView(APIView):
 
         serializer = TaskSerializer(task)
         return Response(serializer.data)
+
+
+class GenerateTasksCSV(APIView):
+    permission_classes = [IsAuthenticated, IsManager | IsCashCollector]
+
+    def get(self, request, *args, **kwargs):
+        # Parse and validate query parameters
+        filter_serializer = TaskFilterSerializer(data=request.query_params)
+        filter_serializer.is_valid(raise_exception=True)
+        filters = filter_serializer.validated_data
+
+        # Create the HttpResponse object with the appropriate CSV header.
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="tasks.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(
+            ['ID', 'Customer', 'Amount Due', 'Assigned To', 'Collected At', 'Delivered To Manager At', 'Completed',
+             'Created At', 'Modified At'])
+
+        tasks = self.get_filtered_tasks(filters, request.user)
+        self.write_tasks_to_csv(writer, tasks)
+
+        return response
+
+    def get_filtered_tasks(self, filters, user):
+
+        if user.is_cash_collector:
+            tasks = Task.objects.filter(assigned_to=user)
+        else:
+            tasks = Task.objects.all()
+
+        if filters.get('completed'):
+            tasks = tasks.filter(completed=filters['completed'])
+
+        if filters.get('assigned'):
+            tasks = tasks.filter(assigned_to__isnull=not filters['assigned'])
+
+        if filters.get('delivered'):
+            tasks = tasks.filter(delivered_to_manager_at__isnull=not filters['delivered'])
+
+        return tasks
+
+    def write_tasks_to_csv(self, writer, tasks):
+        for task in tasks:
+            writer.writerow([
+                task.id,
+                task.customer.name,
+                task.amount_due,
+                task.assigned_to.username if task.assigned_to else '',
+                task.collected_at,
+                task.delivered_to_manager_at,
+                task.completed,
+                task.created_at,
+                task.modified_at,
+            ])

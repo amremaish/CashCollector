@@ -24,3 +24,10 @@ class TaskSerializer(serializers.Serializer):
 
 class TaskCashCollectorSerializer(serializers.Serializer):
     amount_due = serializers.DecimalField(max_digits=10, decimal_places=2)
+
+
+
+class TaskFilterSerializer(serializers.Serializer):
+    completed = serializers.BooleanField(required=False)
+    assigned = serializers.BooleanField(required=False)
+    delivered = serializers.BooleanField(required=False)
