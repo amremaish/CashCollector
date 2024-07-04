@@ -13,6 +13,8 @@ class CustomerSerializer(serializers.Serializer):
 class TaskCreationSerializer(serializers.Serializer):
     customer = serializers.PrimaryKeyRelatedField(queryset=Customer.objects.all())
 
+    def create(self, validated_data):
+        return Task.objects.create(**validated_data)
 
 class TaskSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
@@ -23,8 +25,6 @@ class TaskSerializer(serializers.Serializer):
     completed = serializers.BooleanField(default=False, read_only=True)
     amount_due = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
 
-    def create(self, validated_data):
-        return Task.objects.create(**validated_data)
 
 
 class TaskCashCollectorSerializer(serializers.Serializer):
