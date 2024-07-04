@@ -5,6 +5,8 @@ from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.utils import timezone
+
+from CashCollector import settings
 from apps.users.models import User, Customer
 from apps.tasks.models import Task
 
@@ -156,7 +158,12 @@ class TaskViewsTests(APITestCase):
 
     def test_freeze_account(self):
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + self.cash_collector_token)
-        Task.objects.create(customer=self.customer, assigned_to=self.cash_collector, amount_due=6000.00, collected_at=timezone.now() - timedelta(days=3))
+        Task.objects.create(
+            customer=self.customer,
+            assigned_to=self.cash_collector,
+            amount_due=settings.MAX_CASH_THRESHOLD,
+            collected_at=timezone.now() - timedelta(days=settings.THRESHOLD_DAYS + 1)
+        )
         task = Task.objects.create(customer=self.customer, assigned_to=self.cash_collector)
         url = reverse('task-collect', kwargs={'pk': task.pk})
         data = {'amount_due': '4000.00'}

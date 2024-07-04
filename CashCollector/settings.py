@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import os
+import dotenv
 import sys
 from datetime import timedelta
 from pathlib import Path
@@ -27,7 +29,11 @@ SECRET_KEY = 'django-insecure-bm&*3(2rrr)pgi4xdelpc^9-1@)0fa$v$vd%z%5hxyrvx01fq+
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+# Load environment variables from a .env file
+dotenv.read_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
+# Environment variables for thresholds
+MAX_CASH_THRESHOLD = int(os.getenv('MAX_CASH_THRESHOLD', 5000))
+THRESHOLD_DAYS = int(os.getenv('THRESHOLD_DAYS', 2))
 
 # Application definition
 
