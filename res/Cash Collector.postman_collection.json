@@ -1,0 +1,460 @@
+{
+	"info": {
+		"_postman_id": "f2dc792b-2b83-4840-9ff5-0bcf7b5fa2fa",
+		"name": "Cash Collector",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10370774"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" :\"cash_collector\",\r\n    \"password\" : \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "current user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIwMDMxNzg5LCJpYXQiOjE3MjAwMzE0ODksImp0aSI6ImE3MWNjMGU5YWEwOTRmNDg4NTVjMzcwNjFmODM4Nzc1IiwidXNlcl9pZCI6MX0.prQs-iNJHzjyv3l6XhNav2fMU6tWzjh0iDGzDn8rias",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/users/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_cash_collector",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIwMDM1ODMzLCJpYXQiOjE3MjAwMzIyMzMsImp0aSI6ImVkMzE1ZDVkODIwODRkZjY5ZDUxODQ5MGFmZDZkZWQzIiwidXNlcl9pZCI6MX0.Hq9or-rk27YEY68V-HZGCQiGdEQy-dtRf_AOaApQCwQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"cash_collector\",\r\n    \"email\" : \"cash_collector@test.com\",\r\n    \"first_name\" : \"Amr\",\r\n    \"last_name\" : \"Emaish\",\r\n    \"password\" : \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/users/add/cash-collector",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"add",
+								"cash-collector"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign_up _manager",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"manager\",\r\n    \"email\" : \"manager@test.com\",\r\n    \"first_name\" : \"Amr\",\r\n    \"last_name\" : \"Emaish\",\r\n    \"password\" : \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/users/manager/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"manager",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "current cash collector status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIwMDY5MDM5LCJpYXQiOjE3MjAwNjU0MzksImp0aSI6ImM3MjhhYjNlZmMxZjRlYjM5MzVjYTBlOGVlNGRkZjAzIiwidXNlcl9pZCI6NH0.-FHXDHn66vaoIutihPnoHnlKuinJhesP1CMuor768yY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/users/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "add customer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIwMDQyODAyLCJpYXQiOjE3MjAwMzkyMDIsImp0aSI6IjYyOTRlOGRlNGU5ZjQ5YzI5MGVkOTE1YmQxNDUzODY0IiwidXNlcl9pZCI6M30.RISmLAzS6FDEJTEWfVG7jgcg41CdY8iiavSOdzL-HrI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"test customer\",\r\n    \"address\" : \"Cairo / Egypt\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/users/add/customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"add",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIwMDQyODAyLCJpYXQiOjE3MjAwMzkyMDIsImp0aSI6IjYyOTRlOGRlNGU5ZjQ5YzI5MGVkOTE1YmQxNDUzODY0IiwidXNlcl9pZCI6M30.RISmLAzS6FDEJTEWfVG7jgcg41CdY8iiavSOdzL-HrI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/users/customers?page=2&page_size=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "page_size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tasks",
+			"item": [
+				{
+					"name": "add task",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIwMDU5NDMxLCJpYXQiOjE3MjAwNDc0MzEsImp0aSI6Ijc2ZmY4OWJmNTg0YTRkZDdiNTIxOTFiNzRkODZkMjdiIiwidXNlcl9pZCI6M30.LonUbEtaoDPcZiYQQzGFLuuCwqwVIVUUJ9hxxa5qbnk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/tasks/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tasks",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tasks",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIwMDYyMTY2LCJpYXQiOjE3MjAwNTAxNjYsImp0aSI6IjU0MTVmZDNlODY3YTRjYmViMWUzMjFjNmI3OTJkMGJlIiwidXNlcl9pZCI6NH0.F4d1zOhAqI01OFyrNfbgA8z1On7Ce6j8JEK0KCVe3NY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/tasks?page=1&page_size=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "next_task",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIwMDYwNDUzLCJpYXQiOjE3MjAwNDg0NTMsImp0aSI6IjA1M2U5YjRkNzc1MTQwOTM5MjY4OTcxNmJjMzNhYjc1IiwidXNlcl9pZCI6NH0.44VZ0h67QI4OxDbsrLdlXm5FPU1TIpr8_5p7jvon2_s",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/tasks/next_task",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tasks",
+								"next_task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "collect task",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIwMDYwNDUzLCJpYXQiOjE3MjAwNDg0NTMsImp0aSI6IjA1M2U5YjRkNzc1MTQwOTM5MjY4OTcxNmJjMzNhYjc1IiwidXNlcl9pZCI6NH0.44VZ0h67QI4OxDbsrLdlXm5FPU1TIpr8_5p7jvon2_s",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount_due\": 3000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/tasks/19/collect",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tasks",
+								"19",
+								"collect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deliver task",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIwMDYwNDUzLCJpYXQiOjE3MjAwNDg0NTMsImp0aSI6IjA1M2U5YjRkNzc1MTQwOTM5MjY4OTcxNmJjMzNhYjc1IiwidXNlcl9pZCI6NH0.44VZ0h67QI4OxDbsrLdlXm5FPU1TIpr8_5p7jvon2_s",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/tasks/16/deliver",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tasks",
+								"16",
+								"deliver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GenerateTasksCSV",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIwMjI2NzMzLCJpYXQiOjE3MjAwNTM5MzMsImp0aSI6IjY3MjE4ZWU3MTEwZTRhMTE4Y2UzMDk3OGQzNTBhMGJlIiwidXNlcl9pZCI6NH0.KaZQ8ZKfOEzpZX36IRV3nRAj6i_U5HrHihMQRY72Su8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/tasks/generate_csv?assigned=1&delivered=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"tasks",
+								"generate_csv"
+							],
+							"query": [
+								{
+									"key": "completed",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "assigned",
+									"value": "1"
+								},
+								{
+									"key": "delivered",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
