@@ -23,7 +23,7 @@ class TaskListCreateView(APIView):
         if user.is_manager:
             tasks = Task.objects.all()
         elif user.is_cash_collector:
-            tasks = Task.objects.filter(assigned_to=user)
+            tasks = Task.objects.filter(assigned_to=user, completed=True)
         else:
             tasks = Task.objects.none()
 
