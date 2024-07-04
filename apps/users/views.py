@@ -40,12 +40,11 @@ class AddCashCollector(APIView):
             'is_frozen': False
         })
         serializer = UserSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(
-                {"detail": "Cash Collector has been created"}, status=status.HTTP_201_CREATED
-            )
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(
+            {"detail": "Cash Collector has been created"}, status=status.HTTP_201_CREATED
+        )
 
 
 class SignUpManager(APIView):
@@ -60,12 +59,11 @@ class SignUpManager(APIView):
             'is_frozen': False
         })
         serializer = UserSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(
-                {"detail": "Successfully signed up as manager."}, status=status.HTTP_201_CREATED
-            )
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(
+            {"detail": "Successfully signed up as manager."}, status=status.HTTP_201_CREATED
+        )
 
 
 class CustomerView(APIView):
@@ -74,12 +72,8 @@ class CustomerView(APIView):
     def put(self, request):
         data = request.data
         serializer = CustomerSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(
-                {"detail": "Customer created successfully.", "customer": serializer.data},
-                status=status.HTTP_201_CREATED
-            )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
