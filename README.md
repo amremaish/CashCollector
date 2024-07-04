@@ -44,7 +44,6 @@ features to ensure that Cash Collectors do not abuse the system.
    pip install -r requirements.txt
    ```
 
-
 4. Run migrations:
    ```bash
    python manage.py migrate
@@ -58,6 +57,8 @@ features to ensure that Cash Collectors do not abuse the system.
     python manage.py runserver
    ```
 
+## Postman Collection
+> You can download the it from [here](/res/Cash%20Collector.postman_collection.json).
 ## Database Models
 
 ![alt text](/res/diagram.png)
@@ -248,4 +249,6 @@ curl -X GET http://localhost:8000/api/tasks/generate_csv?assigned=1&delivered=1 
 ![alt text](/res/admin1.png)
 ![alt text](/res/admin2.png)
 ![alt text](/res/admin3.png)
+
+
 
